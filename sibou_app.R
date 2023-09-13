@@ -73,6 +73,18 @@ slide_fy <- sliderTextInput(
   selected = choices_fy[c(1,length(choices_fy))]
 )
 
+explaintexts <- fluidRow(
+  h4("簡単な使い方"),
+  p("左のメニューのダウンロードボタンは絞り込んだ表の全件をダウンロードできます。画面右側の表タブ内に表示される表の上部に表示されるボタンは、表示されている表のみの取得となりますので、適宜使い分けください。"),
+  hr(),
+  h4("免責"),
+  p("このアプリケーションを利用して生じたいかなる損害もアプリケーション作成者はおいません。データは正確であるように努力しますが、作成者の意図しないミスが発生して正確でない情報が含まれる可能性があります。職場のあんぜんサイトの死亡災害データベース(https://anzeninfo.mhlw.go.jp/anzen_pg/SIB_FND.html)にある情報が一次情報となりますので、疑義がある場合は、そちらを参考にしてください。免責事項に同意いただける場合のみ、アプリの利用を継続ください。アプリ利用の継続をもって、この免責事項と以下の利用規約にご同意いただけたものといたします。"),
+  h4("利用規約"),
+  p("本アプリケーションは、厚生労働省の一次データを、より使いやすい形で公開することを目的としています。アクセス数などの情報を学会や論文などで発表する可能性がございます。アプリの提供は予告なく終了する場合がございます。アプリケーションの機能は予告なく変更される場合がございます。本アプリケーションで得た情報を利用して発生したいかなる損害の補償はいたしません。情報の取得と利用はすべて自己責任です。"),
+  h4("ソースコードについて"),
+  p("本アプリケーションのソースコード、元データはgithub上で公開しています。データの処理を含めて興味がある方は、https://github.com/ironwest/sibou-saigaiまで。")
+)
+
 
 ui <- fluidPage(
   
@@ -90,13 +102,17 @@ ui <- fluidPage(
       slide_fy,
       hr(),
       textInput("kw", "災害状況をKWで絞り込む"),
-      textOutput("hits")
+      textOutput("hits"),
+      hr(),
+      downloadBttn("dl","表をダウンロードする")
     ),
+      
     
     # Show a plot of the generated distribution
     mainPanel(width = 9,
       checkboxInput("posgraph", label = "グラフ横並び/表をすべて表示"),
       tabsetPanel(
+        tabPanel("説明"         , br(), explaintexts),
         tabPanel("表"           , br(), DT::dataTableOutput("table")),
         tabPanel("経年:業種"    , br(), plotOutput("plot_gyou")),
         tabPanel("経年:規模"    , br(), plotOutput("plot_kibo")),
@@ -105,8 +121,7 @@ ui <- fluidPage(
         tabPanel("経年:月別"　  , br(), plotOutput("plot_month"))
       )
     )
-  )
-)
+))
 
 server <- function(input, output) {
   #read data
@@ -201,11 +216,23 @@ server <- function(input, output) {
     
     return(res)
   },
+  selection = "none",
   extensions = 'Buttons', 
   options = list(
     dom = 'Bfrtip',
     buttons = c('copy',  'excel')
   ))
+  
+  #download handler
+  output$dl <- downloadHandler(
+    filename = function(){
+      paste("data-", Sys.Date(), ".csv", sep="")
+    }, 
+    content = function(file){
+      write_excel_csv(dat(), file)
+    }
+  )
+  
 }
 
 
