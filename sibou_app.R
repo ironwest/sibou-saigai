@@ -82,7 +82,7 @@ explaintexts <- fluidRow(
   h4("利用規約"),
   p("本アプリケーションは、厚生労働省の一次データを、より使いやすい形で公開することを目的としています。アクセス数などの情報を学会や論文などで発表する可能性がございます。アプリの提供は予告なく終了する場合がございます。アプリケーションの機能は予告なく変更される場合がございます。本アプリケーションで得た情報を利用して発生したいかなる損害の補償はいたしません。情報の取得と利用はすべて自己責任です。"),
   h4("ソースコードについて"),
-  p("本アプリケーションのソースコード、元データはgithub上で公開しています。データの処理を含めて興味がある方は、https://github.com/ironwest/sibou-saigaiまで。")
+  p("本アプリケーションのソースコード、元データはgithub上で公開予定です。諸般の事情があり、2023年12月頃にGihubレポジトリを公開いたします。")
 )
 
 
@@ -118,7 +118,7 @@ ui <- fluidPage(
         tabPanel("経年:規模"    , br(), plotOutput("plot_kibo")),
         tabPanel("経年:起因物"  , br(), plotOutput("plot_kiin")),
         tabPanel("経年:事故要因", br(), plotOutput("plot_jiko")),
-        tabPanel("経年:月別"　  , br(), plotOutput("plot_month"))
+        tabPanel("経年:月別"  , br(), plotOutput("plot_month"))
       )
     )
 ))
@@ -175,7 +175,7 @@ server <- function(input, output) {
   output$plot_gyou  <- renderPlot({ make_plot(dat(),gyou_dai_name, input$posgraph, "業種"      , "年度別事故件数(業種)")})
   output$plot_kibo  <- renderPlot({ make_plot(dat(),kibo         , input$posgraph, "事業場規模", "年度別事故件数(事業場規模)")})
   output$plot_kiin  <- renderPlot({ make_plot(dat(),kiin_dai_name, input$posgraph, "起因物"    , "年度別事故件数(起因物)")})
-  output$plot_jiko　<- renderPlot({ make_plot(dat(),jiko_name    , input$posgraph, "事故原因"  , "年度別事故件数(事故原因)")})
+  output$plot_jiko  <- renderPlot({ make_plot(dat(),jiko_name    , input$posgraph, "事故原因"  , "年度別事故件数(事故原因)")})
   output$plot_month <- renderPlot({ make_plot(dat(),month        , input$posgraph, "月"        , "年度別事故件数(月)")})
   
   output$hits <- renderText({
@@ -200,11 +200,11 @@ server <- function(input, output) {
              `業種(小分類)`       = gyou_syo_name, 
              `事業場規模` = kibo, 
              `起因物コード(大分類)` = kiin_dai_code, 
-             `起因物(大分類)`     　= kiin_dai_name, 
+             `起因物(大分類)`       = kiin_dai_name, 
              `起因物コード(中分類)` = kiin_tyu_code, 
-             `起因物(中分類)`     　= kiin_tyu_name, 
+             `起因物(中分類)`       = kiin_tyu_name, 
              `起因物コード(小分類)` = kiin_syo_code, 
-             `起因物(小分類)`     　= kiin_syo_name, 
+             `起因物(小分類)`       = kiin_syo_name, 
              `事故の型` = jiko_name)
     
     if(!input$posgraph){
@@ -232,7 +232,6 @@ server <- function(input, output) {
       write_excel_csv(dat(), file)
     }
   )
-  
 }
 
 
