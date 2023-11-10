@@ -2,6 +2,8 @@
 
 厚生労働省のオープンデータ（労働災害－死亡災害）のスクレイピング、前処理、Shinyアプリ化に関するGihubレポジトリです。
 
+このレポジトリで作成したウェブアプリは、[https://factory-health.shinyapps.io/sibou-saigai/](https://factory-health.shinyapps.io/sibou-saigai/)です。
+
 ## 背景
 
 厚生労働省の公開データとして、労働災害の死亡災害のデータは[職場のあんぜんサイト](https://anzeninfo.mhlw.go.jp/anzen_pg/SIB_FND.html)で公開されています。しかし、公開されているファイルは、
