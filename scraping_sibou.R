@@ -699,13 +699,13 @@ dd <- dd |>
 write_rds(dd,"death_by_accident_data.rds", compress = "gz")
 
 
-#スクリプトの保存先：https://github.com/ironwest/sibou-saigai/tree/main
-#qrcodeの作成
-code <- qrcode::qr_code("https://github.com/ironwest/sibou-saigai/tree/main")
-plot(code)
-
-# app https://factory-health.shinyapps.io/sibou-saigai/
-code <- qrcode::qr_code("https://factory-health.shinyapps.io/sibou-saigai/")
-plot(code)
+# #スクリプトの保存先：https://github.com/ironwest/sibou-saigai/tree/main
+# #qrcodeの作成
+# code <- qrcode::qr_code("https://github.com/ironwest/sibou-saigai/tree/main")
+# plot(code)
+# 
+# # app https://factory-health.shinyapps.io/sibou-saigai/
+# code <- qrcode::qr_code("https://factory-health.shinyapps.io/sibou-saigai/")
+# plot(code)
 
 
