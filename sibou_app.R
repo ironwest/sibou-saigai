@@ -82,11 +82,20 @@ explaintexts <- fluidRow(
   h4("利用規約"),
   p("本アプリケーションは、厚生労働省の一次データを、より使いやすい形で公開することを目的としています。アクセス数などの情報を学会や論文などで発表する可能性がございます。アプリの提供は予告なく終了する場合がございます。アプリケーションの機能は予告なく変更される場合がございます。本アプリケーションで得た情報を利用して発生したいかなる損害の補償はいたしません。情報の取得と利用はすべて自己責任です。"),
   h4("ソースコードについて"),
-  p("本アプリケーションのソースコード、元データはgithub上で公開予定です。諸般の事情があり、2023年12月頃にGihubレポジトリを公開いたします。")
+  p("本アプリケーションのソースコード、元データはgithub(https://github.com/ironwest/sibou-saigai)上で公開しております。")
 )
 
 
+query <- shiny::wellPanel(
+  h3("アンケート回答へのお願い"),
+  "差支えなければ1－2分で回答できるアンケートにお答えいただけますか？",
+  tags$a(href = "https://forms.gle/7FamYunxEkbAXDhv7", "こちらのフォームにご回答ください。")
+)
+
+
+
 ui <- fluidPage(
+  shinyjs::useShinyjs(),
   
   # Application title-------------------
   titlePanel("労働災害データベースアプリ"),
@@ -110,6 +119,7 @@ ui <- fluidPage(
     
     # Show a plot of the generated distribution
     mainPanel(width = 9,
+      query,
       checkboxInput("posgraph", label = "グラフ横並び/表をすべて表示"),
       tabsetPanel(
         tabPanel("説明"         , br(), explaintexts),
@@ -124,6 +134,7 @@ ui <- fluidPage(
 ))
 
 server <- function(input, output) {
+  
   #read data
   d <- read_rds("death_by_accident_data.rds")
   
